@@ -26,10 +26,9 @@ class ProductPage(BasePage):
     
     def cost_is_equal_to_price_of_good(self):
         assert self.is_element_present(*ProductPageLocators.BASKET_TOTAL), "Alert Message is not presented"
-        bucket = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL)
-        print(bucket.text)
+        element = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL)
         price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
         expected = f"Basket total: {self.return_product_price()}\nView basket"
-        actual = bucket.text
+        actual = element.text
         assert actual == expected, f"Alert Message is incorrect. Expected is {expected} Actual is {actual}"
 
