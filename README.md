@@ -1,9 +1,3 @@
 # stepik_lesson4_1
 
-git clone 
-git status  
-git pull  
-git checkout 
-git stash 
-git stash pop 
-git restore
+This is work on completing the course https://stepik.org/course/575/syllabus
