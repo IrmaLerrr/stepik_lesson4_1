@@ -2,6 +2,7 @@ import pytest
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.remote.webdriver import WebDriver
 
 
 def pytest_addoption(parser):
@@ -9,6 +10,14 @@ def pytest_addoption(parser):
                  help="Choose browser: chrome, edge or firefox")
     parser.addoption('--language', action='store', default="en",
                  help="Choose language")
+
+
+class CustomBrowser:
+    def __init__(self, driver, user_language):
+        self.driver = driver
+        self.user_language = user_language 
+    def __getattr__(self, name):
+        return getattr(self.driver, name)
 
 
 @pytest.fixture(scope="function")
@@ -34,8 +43,15 @@ def browser(request):
     else:
         raise pytest.UsageError("--browser_name should be chrome or firefox")
     
+    language_exceptions = {
+        "en": "en-gb"
+    }
+    user_language = language_exceptions.get(user_language, user_language)
+    
+    browser = CustomBrowser(browser, user_language)
+    
     yield browser
     
-    time.sleep(15)
+    time.sleep(5)
     print("\nquit browser..")
     browser.quit()
