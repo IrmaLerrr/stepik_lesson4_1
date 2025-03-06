@@ -23,6 +23,12 @@ class ProductPage(BasePage):
         expected = f"{self.return_product_name()} has been added to your basket."
         actual = alert[0].text
         assert actual == expected, f"Alert Message is incorrect. Expected is {expected} Actual is {actual}"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.ALERT_MESSAGE), "Success message is presented"
+    
+    def success_message_should_disappear(self):
+        assert self.is_disappeared(*ProductPageLocators.ALERT_MESSAGE), "Sucsess message is not disappeared"
     
     def cost_is_equal_to_price_of_good(self):
         assert self.is_element_present(*ProductPageLocators.BASKET_TOTAL), "Alert Message is not presented"
